@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\LoadTvPrograms',
+        'App\Console\Commands\LoadSchedules'
     ];
 
     /**
@@ -24,6 +25,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
+        $schedule->command('load_schedules')->daily()->timezone('Europe/Belgrade');
     }
 }
