@@ -14,6 +14,3 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
-
-$app->post('load/tvprograms', 'LoadController@loadTvPrograms');
-$app->post('load/schedules', 'LoadController@loadSchedules');

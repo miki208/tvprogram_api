@@ -2,37 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: miki208
- * Date: 02/02/2017
- * Time: 21:58
+ * Date: 4.2.17.
+ * Time: 00.34
  */
 
-namespace App\Http\Controllers;
+namespace app\Console\Commands;
+
+use Illuminate\Console\Command;
 use App\Schedule;
 use App\ScheduleDate;
 use App\TvProgram;
-use Illuminate\Support\Facades\Schema;
 
-class LoadController extends Controller
+
+class LoadSchedules extends Command
 {
-    public function loadTvPrograms() {
-        $content = file_get_contents('http://www.tvprogram.rs/');
-        preg_match_all('/<li><a href="http:\\/\\/www\\.tvprogram\\.rs\\/(.*?)-tv-program-.*?\\.([0-9]+)\\.html">.*?<\\/li>/s', $content, $matches);
+    protected $name = 'load_schedules';
+    protected $description = 'Load schedules for tv programs';
 
-        Schema::disableForeignKeyConstraints();
-        TvProgram::truncate();
-        Schema::enableForeignKeyConstraints();
-
-        $length = count($matches[0]);
-        for ($i = 0; $i < $length; $i++) {
-            $obj = new TvProgram();
-            $obj->name = $matches[1][$i];
-            $obj->uri = $matches[2][$i];
-            $obj->save();
-        }
-    }
-
-    public function LoadSchedules() {
-        date_default_timezone_set ('Europe/Belgrade');
+    public function fire() {
         $day_names = array('nedelja', 'ponedeljak', 'utorak', 'sreda', 'cetvrtak', 'petak', 'subota', 'nedelja', 'ponedeljak');
         $datetime = time() + 3600;
         $day = date('w', $datetime);
