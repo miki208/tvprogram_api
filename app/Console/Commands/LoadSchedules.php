@@ -20,6 +20,8 @@ class LoadSchedules extends Command
     protected $description = 'Load schedules for tv programs';
 
     public function fire() {
+    	date_default_timezone_set('Europe/Belgrade');
+    	
         $day_names = array('nedelja', 'ponedeljak', 'utorak', 'sreda', 'cetvrtak', 'petak', 'subota', 'nedelja', 'ponedeljak');
         $datetime = time() + 3600;
         $day = date('w', $datetime);
